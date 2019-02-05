@@ -9,18 +9,18 @@ def read(fname):
 
 setup(
     name = "pyShortUrl",
-    version = "0.0.9",
-    author = "Parth Bhatt",
-    author_email = "parthrbhatt@gmail.com",
+    version = "0.9.0",
+    author = "Fictive Kin (based on previous work by Parth Bhatt)",
+    author_email = "systems@fictivekin.com",
     description = ("A python library to shorten urls using one of the url shortening services"),
     license = "MIT",
     keywords = "url shortening qrcode qr goo.gl bit.ly tinyurl.com j.mp bitly.com v.gd is.gd",
     platforms = ['Linux', 'Max OS X', 'Windows', 'BSD', 'Unix'],
-    url = "https://github.com/parthrbhatt/pyShortUrl",
+    url = "https://github.com/fictivekin/pyshorturl",
     data_files=[
         ('.', ['README.rst']),
       ],
-    packages = ['pyshorturl', 'pyshorturl/ShortUrl'],
+    packages = ['pyshorturl', 'pyshorturl/providers'],
     long_description = read('README.rst'),
     classifiers = [
         "Development Status :: 4 - Beta",

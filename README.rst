@@ -1,54 +1,52 @@
 
 ===========
-pyShortUrl
+pyshorturl
 ===========
 
-.. image::  https://secure.travis-ci.org/parthrbhatt/pyShortUrl.png
-   :alt: Current build status
-   :target: http://travis-ci.org/#!/parthrbhatt/pyShortUrl
-
-A python library to shorten urls using various url shortening serices.
+A python library to shorten urls using various url shortening serices. Based off of the previously released library by Parth Bhatt.
 
 Following table lists details for each of the supported services:
 
-  +--------------+----------------------+-----------+-------------+
-  | Domain       |  Shorten/Expand URLs |  QR code  | Statistics  |
-  +--------------+----------------------+-----------+-------------+
-  | goo.gl       |        YES           |   YES     |    NO       |
-  +--------------+----------------------+-----------+-------------+
-  | bit.ly       |        YES           |   NO      |    NO       |
-  +--------------+----------------------+-----------+-------------+
-  | j.mp         |        YES           |   NO      |    NO       |
-  +--------------+----------------------+-----------+-------------+
-  | bitly.com    |        YES           |   NO      |    NO       |
-  +--------------+----------------------+-----------+-------------+
-  | tinyurl.com  |        YES           |   NO      |    NO       |
-  +--------------+----------------------+-----------+-------------+
-  | v.gd         |        YES           |   NO      |    NO       |
-  +--------------+----------------------+-----------+-------------+
-  | is.gd        |        YES           |   NO      |    NO       |
-  +--------------+----------------------+-----------+-------------+
-  | git.io       |        YES           |   NO      |    NO       |
-  +--------------+----------------------+-----------+-------------+
+  +--------------+----------------------+-----------+
+  | Domain       |  Shorten/Expand URLs |  QR code  |
+  +--------------+----------------------+-----------+
+  | bit.ly       |        YES           |   NO      |
+  +--------------+----------------------+-----------+
+  | bitly.com    |        YES           |   NO      |
+  +--------------+----------------------+-----------+
+  | gim.ie       |        YES           |   NO      |
+  +--------------+----------------------+-----------+
+  | git.io       |        YES           |   NO      |
+  +--------------+----------------------+-----------+
+  | goo.gl       |        YES           |   YES     |
+  +--------------+----------------------+-----------+
+  | is.gd        |        YES           |   NO      |
+  +--------------+----------------------+-----------+
+  | j.mp         |        YES           |   NO      |
+  +--------------+----------------------+-----------+
+  | tinyurl.com  |        YES           |   NO      |
+  +--------------+----------------------+-----------+
+  | v.gd         |        YES           |   NO      |
+  +--------------+----------------------+-----------+
 
 
 Install
 =======
 
-To install pyShortUrl:
+To install pyshorturl:
 
 ::
 
   python setup.py install
 
 
-Using pyShortUrl
+Using pyshorturl
 ================
 
-pyShortUrl provides simple APIs that your python applications can use. Following
+pyshorturl provides simple APIs that your python applications can use. Following
 are some examples that show how you can use pyShortUrl with goo.gl.
 
-Using pyShortUrl for URL shortening with *goo.gl*
+Using pyshorturl for URL shortening with *goo.gl*
 -------------------------------------------------
 
 Shorten a URL using goo.gl:
@@ -97,7 +95,7 @@ Get QR code for a goo.gl short url:
         print 'Error: %s' %e
 
 
-Using pyShortUrl for URL shortening with *bit.ly*, *j.mp* and *bitly.com*
+Using pyshorturl for URL shortening with *bit.ly*, *j.mp* and *bitly.com*
 -------------------------------------------------------------------------
 
 You can use bit.ly exactly like you'd use goo.gl. Just initialize the *service*
@@ -129,7 +127,7 @@ to the `shorten` function call as shown below:
     except BitlyError, e:
         print '%s' %e
 
-Using pyShortUrl for URL shortening with *tinyurl.com*
+Using pyshorturl for URL shortening with *tinyurl.com*
 ------------------------------------------------------
 
 ::
@@ -144,7 +142,7 @@ You dont need any account name or api key to use TinyUrl.
 Using the pyshorturl-cli.py utility
 ===================================
 
-pyShortUrl ships with a command-line utility called `pyshorturl-cli.py` that
+pyshorturl ships with a command-line utility called `pyshorturl-cli.py` that
 allows you to use all the features of the library from the command line.
 
 ::

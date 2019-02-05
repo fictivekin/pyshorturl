@@ -1,17 +1,21 @@
 
 import random
-from base_shortener import BaseShortener, ShortenerServiceError
+
+from .base import BaseShortener, ShortenerServiceError
+
 
 GITIO_SERVICE_URL = 'https://git.io'
 
+
 class GitioError(ShortenerServiceError):
     pass
+
 
 class Gitio(BaseShortener):
     def __init__(self, api_key=None):
         BaseShortener.__init__(self, api_key=None)
 
-    def _construct_request(self, long_url):
+    def _construct_request(self, long_url):  # pylint: disable=no-self-use
         """Construct the request body as multipart/form-data"""
 
         boundary = '-----------------------------' + str(int(random.random()*1e10))
@@ -33,10 +37,11 @@ class Gitio(BaseShortener):
     def shorten_url(self, long_url):
         request_url = GITIO_SERVICE_URL
         headers, body = self._construct_request(long_url)
-        headers, response = self._do_http_request(request_url, body, headers)
+        headers, response = self._do_http_request(request_url, body, headers)  # pylint: disable=unused-variable
 
         short_url = headers.get('Location')
-        if not short_url:
-            raise GitioError('Unable to get short url for %s.' %long_url)
-        return short_url
 
+        if not short_url:
+            raise GitioError('Unable to get short url for %s.' % long_url)
+
+        return short_url

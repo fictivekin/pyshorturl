@@ -19,3 +19,13 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER I
 AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 '''
+
+from .base import BaseShortener, ShortenerServiceError
+
+from .bit_ly import Bitly, BitlyError
+from .bit_ly_v2 import Bitly as BitlyV2, BitlyError as BitlyV2Error
+from .goo_gl import Googl, GooglError
+from .is_gd import Isgd
+from .v_gd import Vgd, VgdError
+from .git_io import Gitio, GitioError
+from .tinyurl_com import TinyUrlcom, TinyUrlcomError

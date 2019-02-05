@@ -20,21 +20,5 @@ AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 '''
 
-__version__ = '0.0.1'
-__author__ = "Parth Bhatt <parthrbhatt@gmail.com>"
-
-# Mark the user agent string for http requests with the lib version & shove it
-# into the conf module.
-import ShortUrl.conf
-ShortUrl.conf.USER_AGENT_STRING = 'pyShortUrl v%s' %__version__
-
-from ShortUrl.bit_ly import Bitly, BitlyError
-from ShortUrl.bit_ly_v2 import Bitly as BitlyV2, BitlyError as BitlyV2Error
-from ShortUrl.goo_gl import Googl, GooglError
-from ShortUrl.is_gd import Isgd
-from ShortUrl.v_gd import Vgd, VgdError
-from ShortUrl.git_io import Gitio, GitioError
-from ShortUrl.tinyurl_com import TinyUrlcom, TinyUrlcomError
-
-from ShortUrl.base_shortener import BaseShortener, ShortenerServiceError
-from ShortUrl.conf import SUPPORTED_SERVICES, SUPPORTED_DOMAINS
+from .conf import *
+from .providers import *

@@ -1,16 +1,19 @@
 
-import conf
-import urllib2
+import requests
+
+from pyshorturl.conf import USER_AGENT_STRING
+
 
 class ShortenerServiceError(Exception):
     pass
 
-class BaseShortener:
+
+class BaseShortener():
     """Base class for the url shorteners in the lib"""
 
     def __init__(self, api_key):
         self.headers = {
-            'User-Agent': conf.USER_AGENT_STRING,
+            'User-Agent': USER_AGENT_STRING,
         }
         self.api_key = api_key
 
@@ -19,21 +22,15 @@ class BaseShortener:
         if headers:
             self.headers = dict(self.headers.items() + headers.items())
 
-        if data:
-            request = urllib2.Request(request_url, data=data, headers=self.headers)
-        else:
-            request = urllib2.Request(request_url, headers=self.headers)
-
         try:
-            connection = urllib2.urlopen(request)
-            response_headers = connection.headers
-            response_body = connection.read()
+            if data:
+                response = requests.post(request_url, data=data, headers=self.headers)
+            else:
+                response = requests.get(request_url, headers=self.headers)
+            return (response.headers, response.content)
 
-            return (response_headers, response_body)
-        except urllib2.HTTPError, e:
-            raise ShortenerServiceError('%s:%s' %(e.code, e.msg))
-        except urllib2.URLError, e:
-            raise ShortenerServiceError('%s' %(e.reason))
+        except requests.exceptions.HTTPError as e:  # pylint: disable=invalid-name
+            raise ShortenerServiceError(e)
 
     def set_api_key(self, api_key):
         self.api_key = api_key
@@ -41,9 +38,9 @@ class BaseShortener:
     def shorten_url(self, long_url):
         raise NotImplementedError()
 
-    def expand_url(self, short_url):
-        response = urllib2.urlopen(short_url)
-        return response.url
+    def expand_url(self, short_url):  # pylint: disable=no-self-use
+        response = requests.get(short_url)
+        return response.headers.get('location')
 
     def get_qr_code(self, short_url):
         raise NotImplementedError()
@@ -55,10 +52,10 @@ class BaseShortener:
         If the caller does not intent to use the png image file, `get_qr_code()`
         may be used to obtain raw image data.
 
-        Keyword arguments:                                        
-            long_url -- The url to be shortened.                  
-                                                                  
-        Returns:                                                  
+        Keyword arguments:
+            long_url -- The url to be shortened.
+
+        Returns:
             Returns raw png image data that constitutes the qr code image.
 
         Exceptions:
@@ -66,8 +63,7 @@ class BaseShortener:
         """
         image_data = self.get_qr_code(short_url)
 
-        # ToDo: Handle errors.
+        # pylint: disable=invalid-name
         fd = open(image_path, 'w')
         fd.write(image_data)
         fd.close()
-

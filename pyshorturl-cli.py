@@ -1,7 +1,9 @@
 
-from optparse import OptionParser
 import os
 import sys
+
+from optparse import OptionParser
+
 
 try:
     from pyshorturl import Bitly, BitlyV2, Gitio, Googl, Isgd, Vgd, TinyUrlcom, ShortenerServiceError
@@ -9,6 +11,7 @@ try:
 except ImportError:
     print 'pyShortUrl is not installed.'
     sys.exit(-1)
+
 
 if '__main__' == __name__:
 

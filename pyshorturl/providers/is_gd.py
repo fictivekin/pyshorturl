@@ -1,5 +1,5 @@
 
-from v_gd import Vgd, VgdError
+from .v_gd import Vgd, VgdError
 
 
 ISGD_SERVICE_URL = "http://is.gd/%s.php"

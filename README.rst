@@ -5,8 +5,6 @@ pyshorturl
 
 A python library to shorten urls using various url shortening serices. Republished from the previously released library by `Parth Bhatt`_.
 
-.. _Parth Blatt: https://github.com/parthrbhatt
-
 Following table lists details for each of the supported services:
 
   +--------------+----------------------+-----------+
@@ -255,3 +253,5 @@ Retrieve the original long url with git.io:
     $ python pyshorturl-cli.py --service git.io --short-url https://git.io/sUX2IQ
     https://github.com/parthrbhatt/pyShortUrl
 
+
+.. _Parth Blatt: https://github.com/parthrbhatt

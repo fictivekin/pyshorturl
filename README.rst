@@ -3,7 +3,7 @@
 pyshorturl
 ===========
 
-A python library to shorten urls using various url shortening serices. Based off of the previously released library by Parth Bhatt.
+A python library to shorten urls using various url shortening serices. Republished from the previously released library by [Parth Bhatt](https://github.com/parthrbhatt).
 
 Following table lists details for each of the supported services:
 

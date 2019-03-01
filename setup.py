@@ -10,7 +10,7 @@ def read(fname):
 setup(
     name = "pyShortUrl",
     version = "0.9.0",
-    author = "Fictive Kin (based on previous work by Parth Bhatt)",
+    author = "Fictive Kin (mostly of previous work by Parth Bhatt)",
     author_email = "systems@fictivekin.com",
     description = ("A python library to shorten urls using one of the url shortening services"),
     license = "MIT",
@@ -35,5 +35,8 @@ setup(
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Software Development :: Libraries :: Python Modules",
         "Topic :: Utilities",
+    ],
+    install_requires=[
+        "requests"
     ],
 )

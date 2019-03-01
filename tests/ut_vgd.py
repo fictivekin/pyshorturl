@@ -1,12 +1,5 @@
 
-import imghdr
-import os
-import sys
 import unittest
-import imghdr
-
-lib_path = os.path.abspath(os.path.join(os.getcwd(), '../'))
-sys.path.append(lib_path)
 
 from pyshorturl import Vgd
 
@@ -38,6 +31,7 @@ class TestVgd(unittest.TestCase):
         self.assertEqual(self.test_long_url, generated_long_url)
 
 
-if '__main__' == __name__:
+if __name__ == '__main__':
+    # pylint: disable=invalid-name
     suite = unittest.TestLoader().loadTestsFromTestCase(TestVgd)
     unittest.TextTestRunner(verbosity=2).run(suite)

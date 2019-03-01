@@ -1,12 +1,5 @@
 
-import imghdr
-import os
-import sys
 import unittest
-import imghdr
-
-lib_path = os.path.abspath(os.path.join(os.getcwd(), '../'))
-sys.path.append(lib_path)
 
 from pyshorturl import Bitly, BitlyV2
 
@@ -64,6 +57,7 @@ class TestBitly(unittest.TestCase):
 
 
 
-if '__main__' == __name__:
+if __name__ == '__main__':
+    # pylint: disable=invalid-name
     suite = unittest.TestLoader().loadTestsFromTestCase(TestBitly)
     unittest.TextTestRunner(verbosity=2).run(suite)

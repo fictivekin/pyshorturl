@@ -1,11 +1,7 @@
 
 import imghdr
 import os
-import sys
 import unittest
-
-lib_path = os.path.abspath(os.path.join(os.getcwd(), '../'))
-sys.path.append(lib_path)
 
 from pyshorturl import Googl
 
@@ -27,14 +23,6 @@ class TestGoogl(unittest.TestCase):
 
         self.assertEqual(self.test_short_url, generated_short_url)
 
-    '''
-    def test_shorten_url_without_key(self):
-        service = Googl()
-        generated_short_url = service.shorten_url(self.test_long_url)
-
-        self.assertEqual(self.test_short_url, generated_short_url)
-    '''
-
     def test_write_qr_image(self):
         service = Googl()
         service.write_qr_image(self.test_short_url, self.qr_image_path)
@@ -47,15 +35,8 @@ class TestGoogl(unittest.TestCase):
 
         self.assertEqual(self.test_long_url, generated_long_url)
 
-    '''
-    def test_expand_url_without_key(self):
-        service = Googl()
-        generated_long_url = service.expand_url(self.test_short_url)
 
-        self.assertEqual(self.test_long_url, generated_long_url)
-    '''
-
-
-if '__main__' == __name__:
+if __name__ == '__main__':
+    # pylint: disable=invalid-name
     suite = unittest.TestLoader().loadTestsFromTestCase(TestGoogl)
     unittest.TextTestRunner(verbosity=2).run(suite)

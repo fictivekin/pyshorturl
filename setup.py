@@ -9,7 +9,7 @@ def read(fname):
 
 setup(
     name = "pyShortUrl",
-    version = "0.9.1",
+    version = "0.9.2",
     author = "Fictive Kin (mostly of previous work by Parth Bhatt)",
     author_email = "systems@fictivekin.com",
     description = ("A python library to shorten urls using one of the url shortening services"),

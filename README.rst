@@ -254,4 +254,4 @@ Retrieve the original long url with git.io:
     https://github.com/parthrbhatt/pyShortUrl
 
 
-.. _Parth Blatt: https://github.com/parthrbhatt
+.. _Parth Bhatt: https://github.com/parthrbhatt

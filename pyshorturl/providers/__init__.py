@@ -24,7 +24,7 @@ from .base import BaseShortener, ShortenerServiceError
 
 from .bit_ly import Bitly, BitlyError
 from .bit_ly_v2 import Bitly as BitlyV2, BitlyError as BitlyV2Error
-from .gim_ie import Gimie, GimieError
+from .gimme_bar import Gimme, GimmeError
 from .git_io import Gitio, GitioError
 from .goo_gl import Googl, GooglError
 from .is_gd import Isgd

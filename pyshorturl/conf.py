@@ -1,5 +1,5 @@
 
-VERSION = '0.9.0'
+VERSION = '0.9.3'
 
 USER_AGENT_STRING = 'pyShortUrl v%s' % VERSION
 

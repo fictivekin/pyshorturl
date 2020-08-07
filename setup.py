@@ -4,12 +4,14 @@
 import os
 from setuptools import setup
 
+from pyshorturl.conf import VERSION
+
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(
     name = "pyShortUrl",
-    version = "0.9.3",
+    version = VERSION,
     author = "Fictive Kin (mostly of previous work by Parth Bhatt)",
     author_email = "systems@fictivekin.com",
     description = ("A python library to shorten urls using one of the url shortening services"),

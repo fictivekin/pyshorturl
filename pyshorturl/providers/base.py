@@ -11,26 +11,33 @@ class ShortenerServiceError(Exception):
 class BaseShortener():
     """Base class for the url shorteners in the lib"""
 
+    exception_class = ShortenerServiceError
+    service_url = None
+
     def __init__(self, api_key):
         self.headers = {
             'User-Agent': USER_AGENT_STRING,
         }
         self.api_key = api_key
 
-    def _do_http_request(self, request_url, data=None, headers=None):
+    def _do_http_request(self, request_url, *, json=None, data=None, headers=None):
+
+        if not self.service_url:
+            raise self.exception_class('Service URL is empty. Cannot proceed with URL shortening.')
 
         if headers:
-            self.headers = dict(self.headers.items() + headers.items())
+            self.headers.update(headers)
 
         try:
             if data:
-                response = requests.post(request_url, data=data, headers=self.headers)
+                response = requests.post(request_url, json=json, data=data, headers=self.headers)
             else:
                 response = requests.get(request_url, headers=self.headers)
+            response.raise_for_status()
             return (response.headers, response.content)
 
         except requests.exceptions.HTTPError as e:  # pylint: disable=invalid-name
-            raise ShortenerServiceError(e)
+            raise self.exception_class(e)
 
     def set_api_key(self, api_key):
         self.api_key = api_key

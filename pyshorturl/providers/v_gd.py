@@ -13,12 +13,15 @@ class VgdError(ShortenerServiceError):
 
 
 class Vgd(BaseShortener):
+
+    exception_class = VgdError
+    service_url = VGD_SERVICE_URL
+
     def __init__(self):
-        BaseShortener.__init__(self, api_key=None)
+        super().__init__(api_key=None)
         self.default_request_params = {
             'format': 'json',
         }
-        self.service_url = VGD_SERVICE_URL
 
     def _get_request_url(self, action, params):
         request_params = self.default_request_params
@@ -65,7 +68,7 @@ class Vgd(BaseShortener):
         short_url = response.get('shorturl')
         if not short_url:
             error = self._get_error_from_response(response)
-            raise VgdError(error)
+            raise self.exception_class(error)
 
         return short_url
 
@@ -78,6 +81,6 @@ class Vgd(BaseShortener):
         long_url = response.get('url')
         if not long_url:
             error = self._get_error_from_response(response)
-            raise VgdError(error)
+            raise self.exception_class(error)
 
         return long_url

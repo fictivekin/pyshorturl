@@ -12,19 +12,22 @@ class TinyUrlcomError(ShortenerServiceError):
 
 class TinyUrlcom(BaseShortener):
 
+    exception_class = TinyUrlcomError
+    service_url = TINYURLCOM_SERVICE_URL
+
     def __init__(self):
-        BaseShortener.__init__(self, api_key=None)
+        super().__init__(api_key=None)
 
     def _get_request_url(self):  # pylint: disable=no-self-use
-        return TINYURLCOM_SERVICE_URL
+        return self.service_url
 
     def shorten_url(self, long_url):
         data = {'url': long_url}
         data = urlencode(data)
         request_url = self._get_request_url()
-        headers, response = self._do_http_request(request_url, data)  # pylint: disable=unused-variable
+        headers, response = self._do_http_request(request_url, data=data)  # pylint: disable=unused-variable
 
         if response == 'Error':
-            raise TinyUrlcomError('Received Error from tinyurl.com')
+            raise self.exception_class('Received Error from tinyurl.com')
 
         return response

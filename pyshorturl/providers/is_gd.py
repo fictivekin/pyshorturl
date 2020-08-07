@@ -10,6 +10,6 @@ class IsgdError(VgdError):
 
 
 class Isgd(Vgd):
-    def __init__(self):
-        Vgd.__init__(self)
-        self.service_url = ISGD_SERVICE_URL
+
+    exception_class = IsgdError
+    service_url = ISGD_SERVICE_URL

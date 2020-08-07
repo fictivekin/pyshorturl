@@ -14,8 +14,12 @@ class BitlyError(ShortenerServiceError):
 
 
 class Bitly(BaseShortener):
+
+    exception_class = BitlyError
+    service_url = BITLY_SERVICE_URL
+
     def __init__(self, login, api_key):
-        BaseShortener.__init__(self, api_key)
+        super().__init__(api_key)
         self.login = login
         self.default_request_params = {
             'format': 'json',
@@ -29,7 +33,7 @@ class Bitly(BaseShortener):
         request_params = request_params.items()
 
         encoded_params = urlencode(request_params)
-        return "%s%s?%s" % (BITLY_SERVICE_URL, action, encoded_params)
+        return "%s%s?%s" % (self.service_url, action, encoded_params)
 
     def _is_response_success(self, response):  # pylint: disable=no-self-use
         """A successful response will contain:
@@ -85,12 +89,12 @@ class Bitly(BaseShortener):
 
         if not self._is_response_success(response):
             msg = self._get_error_from_response(response)
-            raise BitlyError('Error occurred while shortening url %s: %s' % (long_url, msg))
+            raise self.exception_class('Error occurred while shortening url %s: %s' % (long_url, msg))
 
         data_dict = response.get('data')
         short_url = data_dict.get('url')
         if not short_url:
-            raise BitlyError('Error occurred while shortening url %s' %long_url)
+            raise self.exception_class('Error occurred while shortening url %s' %long_url)
         return short_url
 
 
@@ -107,13 +111,13 @@ class Bitly(BaseShortener):
 
         if not self._is_response_success(response):
             msg = self._get_error_from_response(response)
-            raise BitlyError('Error occurred while expanding url %s: %s' % (short_url, msg))
+            raise self.exception_class('Error occurred while expanding url %s: %s' % (short_url, msg))
 
         data_dict = response.get('data')
         data_dict = data_dict.get('expand')
         long_url = data_dict[0].get('long_url')
         if not long_url:
-            raise BitlyError('Error occurred while expanding url %s' %short_url)
+            raise self.exception_class('Error occurred while expanding url %s' %short_url)
         return long_url
 
     def validate(self, login=None, api_key=None):
@@ -133,7 +137,7 @@ class Bitly(BaseShortener):
 
         if not self._is_response_success(response):
             msg = self._get_error_from_response(response)
-            raise BitlyError('Error occurred while validating account %s: %s' % (self.login, msg))
+            raise self.exception_class('Error occurred while validating account %s: %s' % (self.login, msg))
 
         data = response.get('data')
         return data.get('valid')

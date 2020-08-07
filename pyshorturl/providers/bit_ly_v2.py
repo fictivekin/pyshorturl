@@ -15,8 +15,11 @@ class BitlyError(ShortenerServiceError):
 
 class Bitly(BaseShortener):
 
+    exception_class = BitlyError
+    service_url = BITLY_SERVICE_URL
+
     def __init__(self, login, api_key):
-        BaseShortener.__init__(self, api_key)
+        super().__init__(api_key)
         self.login = login
         self.default_request_params = {
             'version': BITLY_API_VERSION,
@@ -31,7 +34,7 @@ class Bitly(BaseShortener):
         request_params = request_params.items()
 
         encoded_params = urlencode(request_params)
-        return "%s%s?%s" % (BITLY_SERVICE_URL, action, encoded_params)
+        return "%s%s?%s" % (self.service_url, action, encoded_params)
 
     def _is_response_success(self, response):  # pylint: disable=no-self-use
         return response.get('statusCode') == 'OK'
@@ -55,7 +58,7 @@ class Bitly(BaseShortener):
         response = json.loads(response)
         if not self._is_response_success(response):
             msg = self._get_error_from_response(response)
-            raise BitlyError(msg)
+            raise self.exception_class(msg)
 
         results_dict = response.get('results')
         result = results_dict.get(long_url)
@@ -68,7 +71,7 @@ class Bitly(BaseShortener):
         response = json.loads(response)
         if not self._is_response_success(response):
             msg = self._get_error_from_response(response)
-            raise BitlyError(msg)
+            raise self.exception_class(msg)
 
         results_dict = response.get('results')
         return results_dict.values()[0].get('longUrl')
@@ -81,7 +84,7 @@ class Bitly(BaseShortener):
         response = json.loads(response)
         if not self._is_response_success(response):
             msg = self._get_error_from_response(response)
-            raise BitlyError(msg)
+            raise self.exception_class(msg)
 
         results_dict = response.get('results')
         return results_dict.values()[0]
@@ -93,7 +96,7 @@ class Bitly(BaseShortener):
         response = json.loads(response)
         if not self._is_response_success(response):
             msg = self._get_error_from_response(response)
-            raise BitlyError(msg)
+            raise self.exception_class(msg)
 
         results_dict = response.get('results')
         return results_dict

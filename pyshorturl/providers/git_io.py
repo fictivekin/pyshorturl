@@ -12,8 +12,12 @@ class GitioError(ShortenerServiceError):
 
 
 class Gitio(BaseShortener):
+
+    exception_class = GitioError
+    service_url = GITIO_SERVICE_URL
+
     def __init__(self, api_key=None):
-        BaseShortener.__init__(self, api_key=None)
+        super().__init__(api_key=None)
 
     def _construct_request(self, long_url):  # pylint: disable=no-self-use
         """Construct the request body as multipart/form-data"""
@@ -35,13 +39,13 @@ class Gitio(BaseShortener):
         return (headers, body)
 
     def shorten_url(self, long_url):
-        request_url = GITIO_SERVICE_URL
+        request_url = self.service_url
         headers, body = self._construct_request(long_url)
-        headers, response = self._do_http_request(request_url, body, headers)  # pylint: disable=unused-variable
+        headers, response = self._do_http_request(request_url, data=body, headers=headers)  # pylint: disable=unused-variable
 
         short_url = headers.get('Location')
 
         if not short_url:
-            raise GitioError('Unable to get short url for %s.' % long_url)
+            raise self.exception_class('Unable to get short url for %s.' % long_url)
 
         return short_url

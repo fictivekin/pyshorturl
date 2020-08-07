@@ -12,15 +12,19 @@ class GooglError(ShortenerServiceError):
 
 
 class Googl(BaseShortener):
+
+    exception_class = GooglError
+    service_url = GOOGL_SERVICE_URL
+
     def __init__(self, api_key=None):
-        BaseShortener.__init__(self, api_key)
+        super().__init__(api_key)
         # goo.gl mandates that requests containing JSON content bodies must be
         # accompanied by a "Content-Type: application/json" request header.
         # Otherwise, the request will result in an Error (400: Bad Request).
         self.headers['Content-Type'] = 'application/json'
 
     def _get_request_url(self, url_params={}):  # pylint: disable=dangerous-default-value
-        request_url = GOOGL_SERVICE_URL
+        request_url = self.service_url
         param_list = []
 
         if self.api_key:
@@ -39,7 +43,7 @@ class Googl(BaseShortener):
         data = """{"longUrl": "%s"}""" %long_url
 
         request_url = self._get_request_url()
-        headers, response = self._do_http_request(request_url, data)  # pylint: disable=unused-variable
+        headers, response = self._do_http_request(request_url, data=data)  # pylint: disable=unused-variable
 
         response = json.loads(response)
         return response.get('id')

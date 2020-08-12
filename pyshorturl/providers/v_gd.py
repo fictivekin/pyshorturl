@@ -17,8 +17,8 @@ class Vgd(BaseShortener):
     exception_class = VgdError
     service_url = VGD_SERVICE_URL
 
-    def __init__(self):
-        super().__init__(api_key=None)
+    def __init__(self, logger=None):
+        super().__init__(None, logger=logger)
         self.default_request_params = {
             'format': 'json',
         }

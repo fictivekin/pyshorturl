@@ -15,8 +15,8 @@ class TinyUrlcom(BaseShortener):
     exception_class = TinyUrlcomError
     service_url = TINYURLCOM_SERVICE_URL
 
-    def __init__(self):
-        super().__init__(api_key=None)
+    def __init__(self, logger=None):
+        super().__init__(None, logger=logger)
 
     def _get_request_url(self):  # pylint: disable=no-self-use
         return self.service_url

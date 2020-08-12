@@ -1,7 +1,11 @@
 
+import logging
 import requests
 
 from pyshorturl.conf import USER_AGENT_STRING
+
+
+LOGGER = logging.getLogger('pyshorturl.shortener')
 
 
 class ShortenerServiceError(Exception):
@@ -14,11 +18,12 @@ class BaseShortener():
     exception_class = ShortenerServiceError
     service_url = None
 
-    def __init__(self, api_key):
+    def __init__(self, api_key, *, logger=None):
         self.headers = {
             'User-Agent': USER_AGENT_STRING,
         }
         self.api_key = api_key
+        self.logger = logger if logger else LOGGER
 
     def _do_http_request(self, request_url, *, json=None, data=None, headers=None):
 
@@ -29,11 +34,21 @@ class BaseShortener():
             self.headers.update(headers)
 
         try:
-            if data:
+            if data or json:
+                self.logger.debug('Sending POST request to %s' % request_url)
+                self.logger.debug('Headers: %s' % self.headers)
+                self.logger.debug('Data: %s' % data)
+                self.logger.debug('JSON: %s' % json)
                 response = requests.post(request_url, json=json, data=data, headers=self.headers)
+
             else:
+                self.logger.debug('Sending GET request to %s' % request_url)
+                self.logger.debug('Headers: %s' % self.headers)
                 response = requests.get(request_url, headers=self.headers)
+
             response.raise_for_status()
+            if response.headers.get('Content-Type') == 'application/json':
+                return (response.headers, response.json())
             return (response.headers, response.content)
 
         except requests.exceptions.HTTPError as e:  # pylint: disable=invalid-name

@@ -16,8 +16,8 @@ class Gitio(BaseShortener):
     exception_class = GitioError
     service_url = GITIO_SERVICE_URL
 
-    def __init__(self, api_key=None):
-        super().__init__(api_key=None)
+    def __init__(self, api_key=None, logger=None):
+        super().__init__(api_key, logger=logger)
 
     def _construct_request(self, long_url):  # pylint: disable=no-self-use
         """Construct the request body as multipart/form-data"""

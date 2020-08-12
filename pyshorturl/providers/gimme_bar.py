@@ -16,8 +16,8 @@ class GimmeBar(BaseShortener):
     exception_class = GimmeBarError
     service_url = GIMME_BAR_SERVICE_URL
 
-    def __init__(self, api_key=None):
-        super().__init__(api_key=api_key)
+    def __init__(self, api_key=None, logger=None):
+        super().__init__(api_key=api_key, logger=logger)
 
     def _get_request_url(self):  # pylint: disable=no-self-use
         return '/'.join((self.service_url, 'shorten-me'))
@@ -35,7 +35,7 @@ class GimmeBar(BaseShortener):
             raise self.exception_class('Received Error from gim.ie', e)
 
         if not response:
-            raise self.exception_class('Received Error from gim.ie')
+            raise self.exception_class('Received empty response from gim.ie')
 
-        print(response)
+        self.logger.debug(response)
         return '/'.join((self.service_url, response['code']))

@@ -16,8 +16,8 @@ class Googl(BaseShortener):
     exception_class = GooglError
     service_url = GOOGL_SERVICE_URL
 
-    def __init__(self, api_key=None):
-        super().__init__(api_key)
+    def __init__(self, api_key=None, logger=None):
+        super().__init__(api_key, logger=logger)
         # goo.gl mandates that requests containing JSON content bodies must be
         # accompanied by a "Content-Type: application/json" request header.
         # Otherwise, the request will result in an Error (400: Bad Request).

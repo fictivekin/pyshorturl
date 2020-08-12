@@ -18,8 +18,8 @@ class Bitly(BaseShortener):
     exception_class = BitlyError
     service_url = BITLY_SERVICE_URL
 
-    def __init__(self, login, api_key):
-        super().__init__(api_key)
+    def __init__(self, login, api_key, logger=None):
+        super().__init__(api_key, logger=logger)
         self.login = login
         self.default_request_params = {
             'format': 'json',
